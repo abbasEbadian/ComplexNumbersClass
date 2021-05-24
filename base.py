@@ -4,9 +4,26 @@ class Complex:
         self.real = real
         self.imag = imag
         self.R  = self.r()
+
+    def ip(self):
+        if self.imag < 0:
+            return  str(self.imag) + "j"
+        if self.imag == 0:
+            return ""
+        else:
+            p = str(self.imag)
+            if self.imag == 1:
+                p = ""
+            if self.real == 0:
+                return p + "j"
+            else:
+                return " + " + p + "j"
+                
         
     def __add__(self, other):
-        res = Complex(self.real + other.real , self.imag + other.imag)
+        a = self.real + other.real
+        b = self.imag + other.imag
+        res = Complex(a, b)
         return res
     
     def __sub__(self, other):
@@ -58,25 +75,23 @@ class Complex:
     
         
     def __repr__(self):
-        op = " + "
-        if not self.real:
-            op = ""
-            if self.imag < 0:
-                op = " - "
-        else:
-            if self.imag < 0:
-                op = " - "
-        if self.imag == 1:
-            self.imag = " "
-        elif self.imag == 0:
-            self.imag = ""
-        else:
-            self.imag = abs(self.imag)
-        real = self.real or ''
-        imag = self.imag
-        return f"{real}{imag and op + str(imag)+ 'j'}"
+        return f"{self.real or ''}{self.ip()}"
     
 def euler(comp,  c):
     r = c * cos(comp.imag)
     i = c * sin(comp.imag) 
     return Complex(r, i) 
+
+a = Complex(1, 1)
+b = Complex(0, 2)
+print("a: ", a)
+print("b: ", b)
+print("----------")
+print("a+b: ", a + b)
+print("a-b: ", a - b)
+print("a*b: ", a * b)
+print("a/b: ", a / b)
+print("a^2: ", a**2)
+print("a>b: ", a > b)
+print("a<=b: ", a <= b)
+print("euler(b, 2): ", euler(b, 2))
